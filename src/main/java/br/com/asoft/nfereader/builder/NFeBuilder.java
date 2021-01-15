@@ -6,18 +6,12 @@ import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 
+import br.com.asoft.nfereader.model.*;
 import org.glassfish.jersey.internal.util.SimpleNamespaceResolver;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-
-import br.com.asoft.nfereader.model.Dest;
-import br.com.asoft.nfereader.model.Ide;
-import br.com.asoft.nfereader.model.InfNFe;
-import br.com.asoft.nfereader.model.NFe;
-import br.com.asoft.nfereader.model.NFeEmit;
-import br.com.asoft.nfereader.model.NfeProc;
-import br.com.asoft.nfereader.model.ProtNFe;
 
 public class NFeBuilder {
 
@@ -46,6 +40,25 @@ public class NFeBuilder {
 		this.nfe = new NFe();
 		return this;
 	}
+	
+	public NFeBuilder comProtNFe() {		
+		Element xmlIDE = (Element) getObject("//protNFe/infProt", XPathConstants.NODE);
+
+		if(null == xmlIDE){
+			this.protNFe = new ProtNFe();
+			return this;
+		}
+
+		this.protNFe = new ProtNFe(
+				extractTextValue(xmlIDE.getElementsByTagName("tpAmb")),
+				extractTextValue(xmlIDE.getElementsByTagName("chNFe")),
+				extractTextValue(xmlIDE.getElementsByTagName("dhRecbto")),
+				extractTextValue(xmlIDE.getElementsByTagName("cStat")),
+				extractTextValue(xmlIDE.getElementsByTagName("xMotivo")));
+		
+		return this;
+	}
+
 
 	public NFeBuilder comInfNfe() {
 		this.infNFe = new InfNFe();
@@ -54,6 +67,12 @@ public class NFeBuilder {
 
 	public NFeBuilder comIde() {
 		Element xmlIDE = (Element) getObject("//infNFe/ide", XPathConstants.NODE);
+
+		if(null == xmlIDE){
+			this.ide = new Ide();
+			return this;
+		}
+
 		this.ide = new Ide(extractTextValue(xmlIDE.getElementsByTagName("cUF")),
 				extractTextValue(xmlIDE.getElementsByTagName("cNF")),
 				extractTextValue(xmlIDE.getElementsByTagName("natOp")),
@@ -69,6 +88,12 @@ public class NFeBuilder {
 
 	public NFeBuilder comEmit() {
 		Element xmlEmit = (Element) getObject("//infNFe/emit", XPathConstants.NODE);
+
+		if(null == xmlEmit){
+			this.nfeEmit = new NFeEmit();
+			return this;
+		}
+
 		this.nfeEmit = new NFeEmit(extractTextValue(xmlEmit.getElementsByTagName("CNPJ")),
 				extractTextValue(xmlEmit.getElementsByTagName("xNome")),
 				extractTextValue(xmlEmit.getElementsByTagName("xFant")),
@@ -79,10 +104,21 @@ public class NFeBuilder {
 	}
 
 	public NFeBuilder comDest() {
-		Element xmlEmit = (Element) getObject("//infNFe/emit", XPathConstants.NODE);
+		Element xmlEmit = (Element) getObject("//infNFe/dest", XPathConstants.NODE);
+
+		if(null == xmlEmit){
+			this.dest = new Dest();
+			return this;
+		}
+
+		Element enderDest = (Element) getObject("//infNFe/dest/enderDest", XPathConstants.NODE);
+
 		this.dest = new Dest(extractTextValue(xmlEmit.getElementsByTagName("CNPJ")),
 				extractTextValue(xmlEmit.getElementsByTagName("xNome")),
-				extractTextValue(xmlEmit.getElementsByTagName("indIEDest")));
+				extractTextValue(xmlEmit.getElementsByTagName("indIEDest")),
+				null);
+
+		this.dest.setEnderEmit(new EnderDest(extractTextValue(enderDest.getElementsByTagName("UF"))));
 
 		return this;
 	}

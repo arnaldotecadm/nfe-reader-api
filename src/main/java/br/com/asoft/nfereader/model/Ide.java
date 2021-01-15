@@ -1,5 +1,7 @@
 package br.com.asoft.nfereader.model;
 
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
+@JsonPropertyOrder({ "cUF", "cNF", "natOp", "nNF", "dhEmi", "tpNF", "idDest", "cMunFG", "indFinal", "indPres" })
 public class Ide {
 	private String cUF;
 	private String cNF;

@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.asoft.nfereader.service.FilesStorageService;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 @RestController
 public class NfeReaderApplication implements CommandLineRunner {
 
@@ -24,7 +23,7 @@ public class NfeReaderApplication implements CommandLineRunner {
 	}
 
 	@Override
-	public void run(String... arg) throws Exception {
+	public void run(String... arg) {
 		storageService.deleteAll();
 		storageService.init();
 	}

@@ -9,10 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class ProtNFe {
-	private String tpAmb;
-	private String chNFe;
-	private String dhRecbto;
-	private String cStat;
-	private String cxMotivo;
+public class EnderDest {
+    private String UF;
 }

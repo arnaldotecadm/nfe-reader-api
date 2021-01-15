@@ -3,6 +3,7 @@ package br.com.asoft.nfereader.service;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -34,7 +35,7 @@ public class NfeProcessor {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 //		docFactory.setNamespaceAware(true);
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		InputStream inputStream = new ByteArrayInputStream(conteudo.getBytes("UTF-8"));
+		InputStream inputStream = new ByteArrayInputStream(conteudo.getBytes(StandardCharsets.UTF_8));
 		Document document = docBuilder.parse(inputStream);
 		XPathFactory factory = XPathFactory.newInstance();
 		XPath xpath = factory.newXPath();
@@ -48,10 +49,10 @@ public class NfeProcessor {
 
 		}
 		if (tipo == 2) {
-			return (Node) xpath.compile(expressao).evaluate(document, XPathConstants.NODE);
+			return xpath.compile(expressao).evaluate(document, XPathConstants.NODE);
 		}
 		if (tipo == 3) {
-			return (String) xpath.compile(expressao).evaluate(document, XPathConstants.STRING);
+			return xpath.compile(expressao).evaluate(document, XPathConstants.STRING);
 		} else {
 			return "Nenhum valor informado";
 		}
@@ -59,16 +60,18 @@ public class NfeProcessor {
 	}
 
 	public NfeProc process(MultipartFile fileToBeProcessed)
-			throws ParserConfigurationException, SAXException, IOException, XPathExpressionException {
+			throws ParserConfigurationException, SAXException, IOException {
 		DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-		Document document = docBuilder.parse(fileToBeProcessed.getInputStream());
+		Document document = docBuilder.parse(fileToBeProcessed.getInputStream(), "UTF-8");
 
 		return new NFeBuilder(document)
 				.comNFe()
 				.comInfNfe()
 				.comIde()
+				.comEmit()
 				.comDest()
+				.comProtNFe()
 				.build();
 	}
 }

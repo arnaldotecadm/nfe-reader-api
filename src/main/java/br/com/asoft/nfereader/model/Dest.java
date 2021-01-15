@@ -14,4 +14,5 @@ public class Dest {
 	private String CNPJ;
 	private String xNome;
 	private String indIEDest;
+	private EnderDest enderEmit = new EnderDest();
 }
