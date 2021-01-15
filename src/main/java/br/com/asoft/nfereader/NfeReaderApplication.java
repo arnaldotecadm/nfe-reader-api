@@ -30,7 +30,7 @@ public class NfeReaderApplication implements CommandLineRunner {
 
 	@GetMapping({ "", "ping" })
 	public String ping() {
-		return "ok";
+		return "ok.";
 	}
 
 }
