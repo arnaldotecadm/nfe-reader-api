@@ -1,4 +1,4 @@
-package br.com.asoft.nfereader.model;
+package br.com.asoft.nfereader.model.nfe;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,6 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class NFeEmit {
-	private String CNPJ;
-	private String xNome;
-	private String xFant;
-	private String IE;
-	private String CRT;
+public class EnderDest {
+    private String UF;
 }

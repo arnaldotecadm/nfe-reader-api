@@ -1,4 +1,5 @@
-package br.com.asoft.nfereader.model;
+package br.com.asoft.nfereader.model.nfe;
+
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,6 +10,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EnderDest {
-    private String UF;
+public class NFe {
+	private InfNFe infNFe = new InfNFe();
+	private NfeSignature signature = new NfeSignature();
 }

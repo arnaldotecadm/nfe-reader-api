@@ -1,4 +1,4 @@
-package br.com.asoft.nfereader.model;
+package br.com.asoft.nfereader.model.nfe;
 
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 

@@ -1,4 +1,4 @@
-package br.com.asoft.nfereader.model;
+package br.com.asoft.nfereader.model.nfe;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
